@@ -71,4 +71,23 @@ interface TaggableInterface
      * @return bool
      */
     public function setTags($tags, $type = 'name');
+
+    /**
+     * Attach the given tag to the entity.
+     * (zh) 向对象提添加一个标签
+     *
+     * @param  string  $name
+     * @return void
+     */
+    public function addTag($name);
+
+    /**
+     * Detaches the given tag from the entity.
+     * (zh) 从对象中移除一个标签
+     *
+     * @param  string  $name
+     * @return void
+     */
+    public function removeTag($name);
+
 }

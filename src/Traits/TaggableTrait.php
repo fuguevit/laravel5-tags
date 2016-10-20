@@ -2,8 +2,6 @@
 
 namespace Fuguevit\Tags\Traits;
 
-use Illuminate\Database\Eloquent\Builder;
-
 trait TaggableTrait
 {
 
@@ -21,6 +19,12 @@ trait TaggableTrait
      */
     protected static $tagsDelimiter = ',';
 
+    /**
+     * The tags slug generator.
+     *
+     * @var string
+     */
+    protected static $slugGenerator = 'Illuminate\Support\Str::slug';
 
     /**
      * {@inheritdoc}
@@ -103,6 +107,9 @@ trait TaggableTrait
         return true;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function addTag($name)
     {
         $tag = $this->createTagsModel()->firstOrNew([
@@ -119,6 +126,9 @@ trait TaggableTrait
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function removeTag($name)
     {
         $namespace = $this->getEntityClassName();
@@ -159,5 +169,37 @@ trait TaggableTrait
         return array_unique(array_filter($tags));
     }
 
+    /**
+     * Create tags model.
+     *
+     * @return mixed
+     */
+    public static function createTagsModel()
+    {
+        return new static::$tagsModel;
+    }
 
+    /**
+     * Generate the tag slug using the given name.
+     *
+     * @param  string  $name
+     * @return string
+     */
+    protected function generateTagSlug($name)
+    {
+        return call_user_func(static::$slugGenerator, $name);
+    }
+
+    /**
+     * Return the entity class name.
+     *
+     * @return string
+     */
+    protected function getEntityClassName()
+    {
+        if (isset(static::$entityNamespace)) {
+            return static::$entityNamespace;
+        }
+        return $this->tags()->getMorphClass();
+    }
 }
