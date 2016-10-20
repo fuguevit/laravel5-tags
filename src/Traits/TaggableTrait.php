@@ -23,9 +23,7 @@ trait TaggableTrait
 
 
     /**
-     * Return the tags model name.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public static function getModel()
     {
@@ -33,9 +31,7 @@ trait TaggableTrait
     }
 
     /**
-     * Set the tags model name.
-     *
-     * @param  string  $model
+     * {@inheritdoc}
      */
     public static function setModel($model)
     {
@@ -43,9 +39,7 @@ trait TaggableTrait
     }
 
     /**
-     * Return the tags delimiter.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public static function getDelimiter()
     {
@@ -53,9 +47,7 @@ trait TaggableTrait
     }
 
     /**
-     * Set the tags delimiter.
-     *
-     * @param $delimiter
+     * {@inheritdoc}
      */
     public static function setDelimiter($delimiter)
     {
@@ -63,9 +55,7 @@ trait TaggableTrait
     }
 
     /**
-     * Return MorphToMany Relation of the entity.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     * {@inheritdoc}
      */
     public function tags()
     {
@@ -73,12 +63,7 @@ trait TaggableTrait
     }
 
     /**
-     * Attach tag|tags to the entity.
-     * (zh) 向对象添加一个或一组标签
-     *
-     * @param  string|array $tags
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function tag($tags)
     {
@@ -89,13 +74,7 @@ trait TaggableTrait
     }
 
     /**
-     * Detach tag\tags from the entity, if parameter passed is null, clear all
-     * attached tags from the entity.
-     * (zh) 从对象中移除给定标签，如传空值，移除该对象所有标签
-     *
-     * @param null $tags
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function untag($tags = null)
     {
@@ -107,27 +86,17 @@ trait TaggableTrait
     }
 
     /**
-     * Set the given tags to the entity (Clear the tags attached to the entity below).
-     * (zh) 将对象的所有标签重置
-     *
-     * @param  string|array  $tags
-     * @param  string  $type
-     * @return bool
+     * {@inheritdoc}
      */
     public function setTags($tags, $type = 'name')
     {
-        // Prepare the tags
         $tags = $this->prepareTags($tags);
-        // Get the current entity tags
         $entityTags = $this->tags->pluck($type)->all();
-        // Prepare the tags to be added and removed
         $tagsToAdd = array_diff($tags, $entityTags);
-        $tagsToDel = array_diff($entityTags, $tags);
-        // Detach the tags
-        if (! empty($tagsToDel)) {
-            $this->untag($tagsToDel);
+        $tagsToRemove = array_diff($entityTags, $tags);
+        if (! empty($tagsToRemove)) {
+            $this->untag($tagsToRemove);
         }
-        // Attach the tags
         if (! empty($tagsToAdd)) {
             $this->tag($tagsToAdd);
         }
@@ -170,6 +139,12 @@ trait TaggableTrait
         }
     }
 
+    /**
+     * Prepare tags before using.
+     *
+     * @param $tags
+     * @return array
+     */
     public function prepareTags($tags)
     {
         if (is_null($tags)) {
