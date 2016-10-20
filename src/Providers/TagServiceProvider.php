@@ -11,7 +11,7 @@ class TagServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                realpath(__DIR__.'/../../database/migrations') => database_path('migrations')
+                realpath(__DIR__.'/../../database/migrations') => database_path('migrations'),
             ], 'migrations');
         }
     }
@@ -23,5 +23,4 @@ class TagServiceProvider extends ServiceProvider
     {
         //
     }
-
 }
