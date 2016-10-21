@@ -11,7 +11,7 @@ trait TaggableTrait
      */
     public function tags()
     {
-        return $this->morphToMany(Config::get('tag.model'), 'taggable', 'tagged', 'taggable_id', 'tag_id');
+        return $this->morphToMany(Config::get('tag.tagModel'), 'taggable', 'tagged', 'taggable_id', 'tag_id');
     }
 
     /**
@@ -127,7 +127,7 @@ trait TaggableTrait
      */
     public static function createTagsModel()
     {
-        return new Config('tag.model');
+        return new Config('tag.tagModel');
     }
 
     /**

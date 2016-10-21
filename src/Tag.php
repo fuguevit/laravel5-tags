@@ -4,6 +4,7 @@ namespace Fuguevit\Tags;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 
 /**
  * Class Tag.
@@ -18,13 +19,6 @@ class Tag extends Model
      * {@inheritdoc}
      */
     protected $fillable = ['name', 'slug', 'count', 'namespace'];
-
-    /**
-     * Declare the tagged model.
-     *
-     * @var
-     */
-    protected static $taggedModel = Tagged::class;
 
     /**
      * {@inheritdoc}
@@ -51,7 +45,7 @@ class Tag extends Model
      */
     public function tagged()
     {
-        return $this->hasMany(static::$taggedModel, 'tag_id');
+        return $this->hasMany(Config::get('tag.pivotModel'), 'tag_id');
     }
 
     /**
@@ -78,27 +72,5 @@ class Tag extends Model
     public function scopeSlug(Builder $query, $slug)
     {
         return $query->whereSlug($slug);
-    }
-
-    /**
-     * Return the tagged model.
-     *
-     * @return string
-     */
-    public static function getTaggedModel()
-    {
-        return static::$taggedModel;
-    }
-
-    /**
-     * Set the tagged model.
-     *
-     * @param string $taggedModel
-     *
-     * @return void
-     */
-    public static function setTaggedModel($taggedModel)
-    {
-        static::$taggedModel = $taggedModel;
     }
 }
