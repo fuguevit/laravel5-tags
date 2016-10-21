@@ -6,6 +6,18 @@ use Illuminate\Support\Facades\Config;
 
 trait TaggableTrait
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function allTags()
+    {
+        $instance = new static;
+        return $instance->createTagsModel()->whereNamespace(
+            $instance->getEntityClassName()
+        );
+    }
+
     /**
      * {@inheritdoc}
      */

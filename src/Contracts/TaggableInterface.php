@@ -5,6 +5,13 @@ namespace Fuguevit\Tags\Contracts;
 interface TaggableInterface
 {
     /**
+     * Return all tags under the entity namespace.
+     *
+     * @return mixed
+     */
+    public static function allTags();
+
+    /**
      * Return MorphToMany Relation of the entity.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
