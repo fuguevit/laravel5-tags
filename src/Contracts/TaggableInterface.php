@@ -79,6 +79,7 @@ interface TaggableInterface
      * @param Builder $query
      * @param $tags
      * @param string $type
+     *
      * @return mixed
      */
     public function scopeWhereTag(Builder $query, $tags, $type = 'slug');
@@ -90,6 +91,7 @@ interface TaggableInterface
      * @param Builder $query
      * @param $tags
      * @param string $type
+     *
      * @return mixed
      */
     public function scopeWithTag(Builder $query, $tags, $type = 'slug');
@@ -101,6 +103,7 @@ interface TaggableInterface
      * @param Builder $query
      * @param $tags
      * @param string $type
+     *
      * @return mixed
      */
     public function scopeWithoutTag(Builder $query, $tags, $type = 'slug');
