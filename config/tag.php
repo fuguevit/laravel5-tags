@@ -30,6 +30,6 @@ return [
     | Default method for slug generation.
     |
     */
-    'slugGenerator' => 'Illuminate\Support\Str::slug'
+    'slugGenerator' => 'Illuminate\Support\Str::slug',
 
 ];
