@@ -13,6 +13,9 @@ class TagServiceProvider extends ServiceProvider
             $this->publishes([
                 realpath(__DIR__.'/../../database/migrations') => database_path('migrations'),
             ], 'migrations');
+            $this->publishes([
+                realpath(__DIR__.'/../../config/tag.php') => config_path('tag.php'),
+            ], 'config');
         }
     }
 
@@ -21,6 +24,6 @@ class TagServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->mergeConfigFrom(realpath(__DIR__.'/../../config/tag.php'), 'tag');
     }
 }
