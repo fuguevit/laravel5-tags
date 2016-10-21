@@ -2,38 +2,8 @@
 
 namespace Fuguevit\Tags\Contracts;
 
-use Illuminate\Database\Eloquent\Builder;
-
 interface TaggableInterface
 {
-    /**
-     * Return the tags model name.
-     *
-     * @return string
-     */
-    public static function getModel();
-
-    /**
-     * Set the tags model name.
-     *
-     * @param  string  $model
-     */
-    public static function setModel($model);
-
-    /**
-     * Return the tags delimiter.
-     *
-     * @return string
-     */
-    public static function getDelimiter();
-
-    /**
-     * Set the tags delimiter.
-     *
-     * @param $delimiter
-     */
-    public static function setDelimiter($delimiter);
-
     /**
      * Return MorphToMany Relation of the entity.
      *

@@ -2,68 +2,16 @@
 
 namespace Fuguevit\Tags\Traits;
 
+use Illuminate\Support\Facades\Config;
+
 trait TaggableTrait
 {
-
-    /**
-     * The Eloquent tags model name.
-     *
-     * @var string
-     */
-    protected static $tagsModel = 'Fuguevit\Tags\Tag';
-
-    /**
-     * The tags delimiter.
-     *
-     * @var string
-     */
-    protected static $tagsDelimiter = ',';
-
-    /**
-     * The tags slug generator.
-     *
-     * @var string
-     */
-    protected static $slugGenerator = 'Illuminate\Support\Str::slug';
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getModel()
-    {
-        return static::$tagsModel;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function setModel($model)
-    {
-        static::$tagsModel = $model;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getDelimiter()
-    {
-        return static::$tagsDelimiter;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function setDelimiter($delimiter)
-    {
-        static::$tagsDelimiter = $delimiter;
-    }
-
     /**
      * {@inheritdoc}
      */
     public function tags()
     {
-        return $this->morphToMany(static::$tagsModel, 'taggable', 'tagged', 'taggable_id', 'tag_id');
+        return $this->morphToMany(Config::get('tag.model'), 'taggable', 'tagged', 'taggable_id', 'tag_id');
     }
 
     /**
@@ -161,7 +109,7 @@ trait TaggableTrait
             return [];
         }
         if (is_string($tags)) {
-            $delimiter = preg_quote($this->getDelimiter(), '#');
+            $delimiter = preg_quote(Config::get('tag.delimiter'), '#');
             $tags = array_map('trim',
                 preg_split("#[{$delimiter}]#", $tags, null, PREG_SPLIT_NO_EMPTY)
             );
@@ -176,7 +124,7 @@ trait TaggableTrait
      */
     public static function createTagsModel()
     {
-        return new static::$tagsModel;
+        return new Config('tag.model');
     }
 
     /**
@@ -187,7 +135,7 @@ trait TaggableTrait
      */
     protected function generateTagSlug($name)
     {
-        return call_user_func(static::$slugGenerator, $name);
+        return call_user_func(Config::get('tag.slugGenerator'), $name);
     }
 
     /**
