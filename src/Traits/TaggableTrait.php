@@ -2,18 +2,18 @@
 
 namespace Fuguevit\Tags\Traits;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Config;
 
 trait TaggableTrait
 {
-
     /**
      * {@inheritdoc}
      */
     public static function allTags()
     {
-        $instance = new static;
+        $instance = new static();
+
         return $instance->createTagsModel()->whereNamespace(
             $instance->getEntityClassName()
         );
@@ -116,12 +116,13 @@ trait TaggableTrait
      */
     public function scopeWhereTag(Builder $query, $tags, $type = 'slug')
     {
-        $tags = (new static)->prepareTags($tags);
+        $tags = (new static())->prepareTags($tags);
         foreach ($tags as $tag) {
             $query->whereHas('tags', function ($query) use ($type, $tag) {
                 $query->where($type, $tag);
             });
         }
+
         return $query;
     }
 
@@ -130,7 +131,8 @@ trait TaggableTrait
      */
     public static function scopeWithTag(Builder $query, $tags, $type = 'slug')
     {
-        $tags = (new static)->prepareTags($tags);
+        $tags = (new static())->prepareTags($tags);
+
         return $query->whereHas('tags', function ($query) use ($type, $tags) {
             $query->whereIn($type, $tags);
         });
@@ -141,7 +143,8 @@ trait TaggableTrait
      */
     public static function scopeWithoutTag(Builder $query, $tags, $type = 'slug')
     {
-        $tags = (new static)->prepareTags($tags);
+        $tags = (new static())->prepareTags($tags);
+
         return $query->whereDoesntHave('tags', function ($query) use ($type, $tags) {
             $query->whereIn($type, $tags);
         });
