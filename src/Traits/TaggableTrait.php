@@ -3,6 +3,7 @@
 namespace Fuguevit\Tags\Traits;
 
 use Illuminate\Support\Facades\Config;
+use Illuminate\Database\Eloquent\Builder;
 
 trait TaggableTrait
 {
@@ -108,6 +109,42 @@ trait TaggableTrait
             $tag->update(['count' => $tag->count - 1]);
             $this->tags()->detach($tag);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function scopeWhereTag(Builder $query, $tags, $type = 'slug')
+    {
+        $tags = (new static)->prepareTags($tags);
+        foreach ($tags as $tag) {
+            $query->whereHas('tags', function ($query) use ($type, $tag) {
+                $query->where($type, $tag);
+            });
+        }
+        return $query;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function scopeWithTag(Builder $query, $tags, $type = 'slug')
+    {
+        $tags = (new static)->prepareTags($tags);
+        return $query->whereHas('tags', function ($query) use ($type, $tags) {
+            $query->whereIn($type, $tags);
+        });
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function scopeWithoutTag(Builder $query, $tags, $type = 'slug')
+    {
+        $tags = (new static)->prepareTags($tags);
+        return $query->whereDoesntHave('tags', function ($query) use ($type, $tags) {
+            $query->whereIn($type, $tags);
+        });
     }
 
     /**

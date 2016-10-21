@@ -2,6 +2,8 @@
 
 namespace Fuguevit\Tags\Contracts;
 
+use Illuminate\Database\Query\Builder;
+
 interface TaggableInterface
 {
     /**
@@ -69,4 +71,37 @@ interface TaggableInterface
      * @return void
      */
     public function removeTag($name);
+
+    /**
+     * Return the entities with all the given tags.
+     * (zh) 返回拥有全部指定标签的对象.
+     *
+     * @param Builder $query
+     * @param $tags
+     * @param string $type
+     * @return mixed
+     */
+    public function scopeWhereTag(Builder $query, $tags, $type = 'slug');
+
+    /**
+     * Return the entities with at least one of the given tags.
+     * (zh) 返回拥有至少一个指定标签的对象.
+     *
+     * @param Builder $query
+     * @param $tags
+     * @param string $type
+     * @return mixed
+     */
+    public function scopeWithTag(Builder $query, $tags, $type = 'slug');
+
+    /**
+     * Return the entities without any given tag.
+     * (zh) 返回不含任何一个指定标签的对象.
+     *
+     * @param Builder $query
+     * @param $tags
+     * @param string $type
+     * @return mixed
+     */
+    public function scopeWithoutTag(Builder $query, $tags, $type = 'slug');
 }
