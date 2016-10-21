@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Tag
- * @package Fuguevit\Tags
+ * Class Tag.
  */
 class Tag extends Model
 {
@@ -35,6 +34,7 @@ class Tag extends Model
         if ($this->exists) {
             $this->tagged()->delete();
         }
+
         return parent::delete();
     }
 
@@ -59,6 +59,7 @@ class Tag extends Model
      *
      * @param Builder $query
      * @param $name
+     *
      * @return mixed
      */
     public function scopeName(Builder $query, $name)
@@ -69,8 +70,9 @@ class Tag extends Model
     /**
      * Find a tag by its slug.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $slug
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string                                $slug
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSlug(Builder $query, $slug)
@@ -91,7 +93,8 @@ class Tag extends Model
     /**
      * Set the tagged model.
      *
-     * @param  string  $taggedModel
+     * @param string $taggedModel
+     *
      * @return void
      */
     public static function setTaggedModel($taggedModel)

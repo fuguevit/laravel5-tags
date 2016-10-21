@@ -5,8 +5,7 @@ namespace Fuguevit\Tags;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Tagged
- * @package Fuguevit\Tags
+ * Class Tagged.
  */
 class Tagged extends Model
 {
@@ -16,5 +15,4 @@ class Tagged extends Model
      * {@inheritdoc}
      */
     public $timestamps = false;
-
 }

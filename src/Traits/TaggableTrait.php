@@ -22,6 +22,7 @@ trait TaggableTrait
         foreach ($this->prepareTags($tags) as $tag) {
             $this->addTag($tag);
         }
+
         return true;
     }
 
@@ -34,6 +35,7 @@ trait TaggableTrait
         foreach ($this->prepareTags($tags) as $tag) {
             $this->removeTag($tag);
         }
+
         return true;
     }
 
@@ -46,12 +48,13 @@ trait TaggableTrait
         $entityTags = $this->tags->pluck($type)->all();
         $tagsToAdd = array_diff($tags, $entityTags);
         $tagsToRemove = array_diff($entityTags, $tags);
-        if (! empty($tagsToRemove)) {
+        if (!empty($tagsToRemove)) {
             $this->untag($tagsToRemove);
         }
-        if (! empty($tagsToAdd)) {
+        if (!empty($tagsToAdd)) {
             $this->tag($tagsToAdd);
         }
+
         return true;
     }
 
@@ -64,12 +67,12 @@ trait TaggableTrait
             'slug'      => $this->generateTagSlug($name),
             'namespace' => $this->getEntityClassName(),
         ]);
-        if (! $tag->exists) {
+        if (!$tag->exists) {
             $tag->name = $name;
             $tag->save();
         }
-        if (! $this->tags->contains($tag->id)) {
-            $tag->update([ 'count' => $tag->count + 1 ]);
+        if (!$this->tags->contains($tag->id)) {
+            $tag->update(['count' => $tag->count + 1]);
             $this->tags()->attach($tag);
         }
     }
@@ -86,13 +89,11 @@ trait TaggableTrait
             ->where(function ($query) use ($name) {
                 $query
                     ->orWhere('name', $name)
-                    ->orWhere('slug', $name)
-                ;
+                    ->orWhere('slug', $name);
             })
-            ->first()
-        ;
+            ->first();
         if ($tag) {
-            $tag->update([ 'count' => $tag->count - 1 ]);
+            $tag->update(['count' => $tag->count - 1]);
             $this->tags()->detach($tag);
         }
     }
@@ -101,6 +102,7 @@ trait TaggableTrait
      * Prepare tags before using.
      *
      * @param $tags
+     *
      * @return array
      */
     public function prepareTags($tags)
@@ -114,6 +116,7 @@ trait TaggableTrait
                 preg_split("#[{$delimiter}]#", $tags, null, PREG_SPLIT_NO_EMPTY)
             );
         }
+
         return array_unique(array_filter($tags));
     }
 
@@ -130,7 +133,8 @@ trait TaggableTrait
     /**
      * Generate the tag slug using the given name.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return string
      */
     protected function generateTagSlug($name)
@@ -148,6 +152,7 @@ trait TaggableTrait
         if (isset(static::$entityNamespace)) {
             return static::$entityNamespace;
         }
+
         return $this->tags()->getMorphClass();
     }
 }
