@@ -1,5 +1,7 @@
 <?php
 
+namespace Fuguevit\Tags\Providers;
+
 use Illuminate\Support\ServiceProvider;
 
 class TagServiceProvider extends ServiceProvider
@@ -9,14 +11,12 @@ class TagServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if ($this->app->runningInConsole()) {
-            $this->publishes([
-                realpath(__DIR__.'/../../database/migrations') => database_path('migrations'),
-            ], 'migrations');
-            $this->publishes([
-                realpath(__DIR__.'/../../config/tag.php') => config_path('tag.php'),
-            ], 'config');
-        }
+        $this->publishes([
+            realpath(__DIR__.'/../../database/migrations/') => database_path('migrations'),
+        ], 'migrations');
+        $this->publishes([
+            realpath(__DIR__.'/../../config/tag.php') => config_path('tag.php'),
+        ], 'config');
     }
 
     /**
