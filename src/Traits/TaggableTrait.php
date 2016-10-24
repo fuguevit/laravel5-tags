@@ -179,7 +179,8 @@ trait TaggableTrait
      */
     public static function createTagsModel()
     {
-        return new Config('tag.tagModel');
+        $tagModel = Config::get('tag.tagModel');
+        return new $tagModel;
     }
 
     /**
