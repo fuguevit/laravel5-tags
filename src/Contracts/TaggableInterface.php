@@ -2,7 +2,7 @@
 
 namespace Fuguevit\Tags\Contracts;
 
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 interface TaggableInterface
 {
