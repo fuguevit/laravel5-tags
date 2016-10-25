@@ -114,7 +114,7 @@ trait TaggableTrait
     /**
      * {@inheritdoc}
      */
-    public function scopeWhereTag(Builder $query, $tags, $type = 'slug')
+    public static function scopeWhereTag(Builder $query, $tags, $type = 'slug')
     {
         $tags = (new static())->prepareTags($tags);
         foreach ($tags as $tag) {

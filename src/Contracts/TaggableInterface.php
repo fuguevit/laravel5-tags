@@ -82,7 +82,7 @@ interface TaggableInterface
      *
      * @return mixed
      */
-    public function scopeWhereTag(Builder $query, $tags, $type = 'slug');
+    public static function scopeWhereTag(Builder $query, $tags, $type = 'slug');
 
     /**
      * Return the entities with at least one of the given tags.
@@ -94,7 +94,7 @@ interface TaggableInterface
      *
      * @return mixed
      */
-    public function scopeWithTag(Builder $query, $tags, $type = 'slug');
+    public static function scopeWithTag(Builder $query, $tags, $type = 'slug');
 
     /**
      * Return the entities without any given tag.
@@ -106,5 +106,5 @@ interface TaggableInterface
      *
      * @return mixed
      */
-    public function scopeWithoutTag(Builder $query, $tags, $type = 'slug');
+    public static function scopeWithoutTag(Builder $query, $tags, $type = 'slug');
 }
