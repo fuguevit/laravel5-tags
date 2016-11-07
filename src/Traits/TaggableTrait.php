@@ -3,7 +3,6 @@
 namespace Fuguevit\Tags\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Config;
 
 trait TaggableTrait
 {
@@ -24,7 +23,7 @@ trait TaggableTrait
      */
     public function tags()
     {
-        return $this->morphToMany(Config::get('tag.tagModel'), 'taggable', 'tagged', 'taggable_id', 'tag_id');
+        return $this->morphToMany(config('tag.tagModel'), 'taggable', 'tagged', 'taggable_id', 'tag_id');
     }
 
     /**
@@ -163,7 +162,7 @@ trait TaggableTrait
             return [];
         }
         if (is_string($tags)) {
-            $delimiter = preg_quote(Config::get('tag.delimiter'), '#');
+            $delimiter = preg_quote(config('tag.delimiter'), '#');
             $tags = array_map('trim',
                 preg_split("#[{$delimiter}]#", $tags, null, PREG_SPLIT_NO_EMPTY)
             );
@@ -179,7 +178,7 @@ trait TaggableTrait
      */
     public static function createTagsModel()
     {
-        $tagModel = Config::get('tag.tagModel');
+        $tagModel = config('tag.tagModel');
 
         return new $tagModel();
     }
@@ -193,7 +192,7 @@ trait TaggableTrait
      */
     protected function generateTagSlug($name)
     {
-        return call_user_func(Config::get('tag.slugGenerator'), $name);
+        return call_user_func(config('tag.slugGenerator'), $name);
     }
 
     /**
