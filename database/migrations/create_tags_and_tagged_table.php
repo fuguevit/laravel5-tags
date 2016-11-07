@@ -5,10 +5,16 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateTagsAndTaggedTable extends Migration
 {
+    /**
+     * Run the migration.
+     *
+     * @return void
+     */
     public function up()
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('tags', function(Blueprint $table) {
             $table->engine = 'InnoDB';
+
             $table->increments('id');
             $table->string('namespace');
             $table->string('name');
@@ -16,8 +22,9 @@ class CreateTagsAndTaggedTable extends Migration
             $table->unsignedInteger('count')->default(0);
         });
 
-        Schema::create('tagged', function (Blueprint $table) {
+        Schema::create('tagged', function(Blueprint $table) {
             $table->engine = 'InnoDB';
+
             $table->increments('id');
             $table->string('taggable_type');
             $table->unsignedInteger('taggable_id');
@@ -25,9 +32,14 @@ class CreateTagsAndTaggedTable extends Migration
         });
     }
 
+    /**
+     * Reverse the migration.
+     *
+     * @return void
+     */
     public function down()
     {
-        Schema::drop('tagged');
-        Schema::drop('tags');
+        Schema::dropIfExists('tagged');
+        Schema::dropIfExists('tags');
     }
 }
