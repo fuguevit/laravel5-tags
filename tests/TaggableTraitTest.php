@@ -29,10 +29,9 @@ class TaggableTraitTest extends TestCase
     {
         $article = $this->createArticle();
 
-        $article->tag(['one','two','three']);
+        $article->tag(['one', 'two', 'three']);
         $article = $article->fresh();
 
-        $this->assertSame(['one','two','three'], $article->tags->pluck('slug')->toArray());
+        $this->assertSame(['one', 'two', 'three'], $article->tags->pluck('slug')->toArray());
     }
-
 }
