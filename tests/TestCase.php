@@ -56,7 +56,7 @@ class TestCase extends OrchestraTestCase
     {
         return Article::create([
             'title' => 'foo',
-            'body'  => 'bar'
+            'body'  => 'bar',
         ]);
     }
 }

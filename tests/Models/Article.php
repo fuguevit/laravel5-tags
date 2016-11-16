@@ -2,8 +2,8 @@
 
 namespace Fuguevit\Tags\Tests\Models;
 
-use Fuguevit\Tags\Traits\TaggableTrait;
 use Fuguevit\Tags\Contracts\TaggableInterface;
+use Fuguevit\Tags\Traits\TaggableTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model implements TaggableInterface
@@ -14,6 +14,6 @@ class Article extends Model implements TaggableInterface
 
     protected $fillable = [
         'title',
-        'body'
+        'body',
     ];
 }
