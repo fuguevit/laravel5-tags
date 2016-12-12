@@ -34,4 +34,22 @@ class TaggableTraitTest extends TestCase
 
         $this->assertSame(['one', 'two', 'three'], $article->tags->pluck('slug')->toArray());
     }
+
+    /**
+     * Test TaggableTrait can remove tags.
+     */
+    public function test_it_can_untag_tags()
+    {
+        $article = $this->createArticle();
+        
+        $article->tag(['one','two','three']);
+        $article->untag('one');
+        $article = $article->fresh();
+        
+        $this->assertSame(['two', 'three'], $article->tags->pluck('slug')->toArray());
+        
+        $article->untag();
+        $article = $article->fresh();
+        $this->assertSame(0, count($article->tags));
+    }
 }
