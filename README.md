@@ -129,4 +129,5 @@ User::withoutTag('foo,bar')->get();
 ```
 
 **LICENSE**
+
 MIT
