@@ -128,6 +128,6 @@ If you want to get entities that does not have all tags you provide
 User::withoutTag('foo,bar')->get();
 ```
 
-**LICENSE**
+## LICENSE
 
 MIT
